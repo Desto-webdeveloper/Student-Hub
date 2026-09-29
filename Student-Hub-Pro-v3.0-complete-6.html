@@ -1,0 +1,5492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Student Hub Pro 3.0 — Smart Student OS</title>
+
+<style>
+:root{
+--primary:#4f46e5;
+--secondary:#7c3aed;
+--success:#16a34a;
+--danger:#dc2626;
+--warning:#f59e0b;
+--bg:#f4f6fb;
+--card:#ffffff;
+--text:#172033;
+--muted:#6b7280;
+--border:#e5e7eb;
+}
+
+body.dark{
+--bg:#111827;
+--card:#1f2937;
+--text:#f9fafb;
+--muted:#9ca3af;
+--border:#374151;
+}
+
+*{
+box-sizing:border-box;
+margin:0;
+padding:0;
+}
+
+body{
+font-family:Arial,sans-serif;
+background:var(--bg);
+color:var(--text);
+min-height:100vh;
+transition:.3s;
+}
+
+button,input,select,textarea{
+font-family:inherit;
+}
+
+button{
+cursor:pointer;
+}
+
+header{
+position:sticky;
+top:0;
+z-index:1000;
+background:var(--card);
+border-bottom:1px solid var(--border);
+padding:12px 16px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.logo{
+font-size:19px;
+font-weight:bold;
+color:var(--primary);
+}
+
+.header-right{
+display:flex;
+align-items:center;
+gap:10px;
+}
+
+.header-avatar{
+width:40px;
+height:40px;
+border-radius:50%;
+background:linear-gradient(135deg,var(--primary),var(--secondary));
+color:white;
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:bold;
+overflow:hidden;
+}
+
+.header-avatar img,
+.profile-picture img,
+.id-avatar img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+main{
+max-width:1000px;
+margin:auto;
+padding:16px;
+padding-bottom:100px;
+}
+
+.page{
+display:none;
+}
+
+.page.active{
+display:block;
+}
+
+h1,h2,h3{
+margin-bottom:10px;
+}
+
+.card{
+background:var(--card);
+border:1px solid var(--border);
+border-radius:18px;
+padding:17px;
+margin-bottom:15px;
+box-shadow:0 5px 20px rgba(0,0,0,.05);
+}
+
+.welcome{
+padding:22px;
+border-radius:20px;
+color:white;
+background:linear-gradient(135deg,var(--primary),var(--secondary));
+margin-bottom:15px;
+}
+
+.dashboard-grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:12px;
+}
+
+.stat{
+background:var(--card);
+border:1px solid var(--border);
+border-radius:16px;
+padding:16px;
+}
+
+.stat-icon{
+font-size:24px;
+}
+
+.stat-number{
+font-size:27px;
+font-weight:bold;
+color:var(--primary);
+margin-top:5px;
+}
+
+.quick-grid{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:10px;
+}
+
+.quick{
+border:1px solid var(--border);
+background:var(--card);
+border-radius:15px;
+padding:14px 5px;
+text-align:center;
+color:var(--text);
+}
+
+.quick-icon{
+font-size:25px;
+display:block;
+margin-bottom:5px;
+}
+
+.btn{
+border:none;
+padding:11px 15px;
+border-radius:10px;
+background:var(--primary);
+color:white;
+font-weight:bold;
+margin-top:7px;
+}
+
+.btn.success{background:var(--success)}
+.btn.danger{background:var(--danger)}
+.btn.warning{background:var(--warning)}
+.btn.secondary{background:#6b7280}
+
+.field{
+margin-bottom:13px;
+}
+
+.field label{
+display:block;
+font-size:13px;
+font-weight:bold;
+color:var(--muted);
+margin-bottom:6px;
+}
+
+input,select,textarea{
+width:100%;
+padding:11px;
+border-radius:10px;
+border:1px solid var(--border);
+background:var(--bg);
+color:var(--text);
+outline:none;
+}
+
+textarea{
+min-height:110px;
+resize:vertical;
+}
+
+.grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:12px;
+}
+
+.search-box{
+display:flex;
+gap:8px;
+}
+
+.search-box input{
+flex:1;
+}
+
+.progress{
+height:11px;
+background:var(--border);
+border-radius:20px;
+overflow:hidden;
+}
+
+.progress-bar{
+height:100%;
+background:linear-gradient(90deg,var(--primary),var(--secondary));
+}
+
+.task,.course,.exam,.notice{
+padding:13px;
+border:1px solid var(--border);
+border-radius:12px;
+margin-top:10px;
+}
+
+.task.done{
+opacity:.6;
+text-decoration:line-through;
+}
+
+.priority{
+display:inline-block;
+padding:4px 8px;
+border-radius:20px;
+font-size:11px;
+margin:5px 0;
+}
+
+.high{
+background:#fee2e2;
+color:#991b1b;
+}
+
+.medium{
+background:#fef3c7;
+color:#92400e;
+}
+
+.low{
+background:#dcfce7;
+color:#166534;
+}
+
+.calc-display{
+width:100%;
+height:65px;
+font-size:28px;
+text-align:right;
+margin-bottom:10px;
+}
+
+.calc-buttons{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:7px;
+}
+
+.calc-buttons button{
+padding:15px 5px;
+border:none;
+border-radius:10px;
+background:var(--bg);
+color:var(--text);
+font-weight:bold;
+}
+
+.calc-buttons .operator{
+background:var(--primary);
+color:white;
+}
+
+.profile-picture{
+width:110px;
+height:110px;
+border-radius:50%;
+background:linear-gradient(135deg,var(--primary),var(--secondary));
+color:white;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:40px;
+font-weight:bold;
+margin:0 auto 18px;
+overflow:hidden;
+}
+
+.profile-actions{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:8px;
+}
+
+.id-card{
+max-width:500px;
+margin:auto;
+padding:20px;
+border-radius:20px;
+background:linear-gradient(135deg,#312e81,#7c3aed);
+color:white;
+}
+
+.id-top{
+display:flex;
+gap:15px;
+align-items:center;
+}
+
+.id-avatar{
+width:75px;
+height:75px;
+border-radius:50%;
+background:white;
+color:#4f46e5;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:28px;
+font-weight:bold;
+overflow:hidden;
+}
+
+.id-info{
+margin-top:20px;
+}
+
+.id-info p{
+margin:7px 0;
+}
+
+.bottom-nav{
+position:fixed;
+bottom:0;
+left:0;
+right:0;
+z-index:999;
+background:var(--card);
+border-top:1px solid var(--border);
+display:flex;
+overflow-x:auto;
+}
+
+.bottom-nav button{
+min-width:76px;
+flex:1;
+border:none;
+background:none;
+color:var(--muted);
+padding:9px 4px;
+font-size:11px;
+}
+
+.bottom-nav button.active{
+color:var(--primary);
+font-weight:bold;
+}
+
+.countdown{
+font-size:28px;
+font-weight:bold;
+color:var(--primary);
+margin:10px 0;
+}
+
+.empty{
+color:var(--muted);
+padding:12px 0;
+}
+
+/* ================= AI ASSISTANT ================= */
+
+.ai-card{
+background:linear-gradient(135deg,#eef2ff,#f5f3ff);
+border:1px solid #c7d2fe;
+}
+
+body.dark .ai-card{
+background:linear-gradient(135deg,#1e1b4b,#312e81);
+border-color:#4338ca;
+}
+
+.ai-header{
+display:flex;
+align-items:center;
+gap:12px;
+margin-bottom:12px;
+}
+
+.ai-avatar{
+width:50px;
+height:50px;
+min-width:50px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+background:linear-gradient(135deg,var(--primary),var(--secondary));
+color:white;
+font-size:26px;
+box-shadow:0 5px 15px rgba(79,70,229,.3);
+}
+
+.ai-header h3{
+margin:0;
+}
+
+.ai-status{
+font-size:12px;
+color:var(--success);
+}
+
+.ai-chat{
+max-height:280px;
+overflow-y:auto;
+padding:5px 0;
+}
+
+.ai-message{
+padding:11px 14px;
+border-radius:16px;
+margin:8px 0;
+max-width:88%;
+line-height:1.5;
+font-size:14px;
+}
+
+.ai-message.bot{
+background:white;
+border:1px solid #e5e7eb;
+margin-right:auto;
+}
+
+body.dark .ai-message.bot{
+background:#374151;
+border-color:#4b5563;
+}
+
+.ai-message.user{
+background:var(--primary);
+color:white;
+margin-left:auto;
+}
+
+.ai-input-row{
+display:flex;
+gap:7px;
+margin-top:12px;
+background:var(--card);
+padding:5px;
+border-radius:25px;
+border:1px solid var(--border);
+}
+
+.ai-input-row input{
+flex:1;
+border:none;
+background:transparent;
+outline:none;
+}
+
+.ai-button{
+width:42px;
+height:42px;
+min-width:42px;
+border:none;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:17px;
+}
+
+.ai-mic{
+background:#e5e7eb;
+color:#111827;
+}
+
+.ai-send{
+background:var(--primary);
+color:white;
+}
+
+.ai-suggestions{
+display:flex;
+gap:7px;
+overflow-x:auto;
+padding-top:10px;
+}
+
+.ai-suggestions button{
+white-space:nowrap;
+border:1px solid var(--border);
+background:var(--card);
+color:var(--text);
+border-radius:20px;
+padding:8px 12px;
+font-size:12px;
+}
+
+.ai-typing{
+opacity:.7;
+font-style:italic;
+}
+
+/* ================= PIN LOCK ================= */
+
+#pinLock{
+position:fixed;
+inset:0;
+z-index:99999;
+background:linear-gradient(135deg,#312e81,#7c3aed);
+display:none;
+align-items:center;
+justify-content:center;
+padding:20px;
+}
+
+.pin-box{
+width:100%;
+max-width:380px;
+background:white;
+color:#172033;
+border-radius:24px;
+padding:28px;
+text-align:center;
+box-shadow:0 20px 60px rgba(0,0,0,.3);
+}
+
+.pin-logo{
+font-size:50px;
+margin-bottom:10px;
+}
+
+.pin-box input{
+text-align:center;
+font-size:25px;
+letter-spacing:8px;
+margin:15px 0;
+background:#f4f6fb;
+color:#172033;
+}
+
+.pin-error{
+color:#dc2626;
+font-size:13px;
+min-height:20px;
+}
+
+@media(max-width:650px){
+
+.quick-grid{
+grid-template-columns:repeat(2,1fr);
+}
+
+.grid{
+grid-template-columns:1fr;
+}
+
+#headerName{
+display:none;
+}
+
+.profile-actions{
+grid-template-columns:1fr;
+}
+
+}
+
+@media(min-width:700px){
+
+.dashboard-grid{
+grid-template-columns:repeat(4,1fr);
+}
+
+}
+
+/* ================= FONT SETTINGS ================= */
+:root{
+  --app-font-family: Arial, sans-serif;
+  --app-font-size: 16px;
+  --app-font-weight: 400;
+  --app-letter-spacing: 0px;
+  --app-line-height: 1.5;
+}
+body{
+  font-family:var(--app-font-family);
+  font-size:var(--app-font-size);
+  font-weight:var(--app-font-weight);
+  letter-spacing:var(--app-letter-spacing);
+  line-height:var(--app-line-height);
+}
+button,input,select,textarea{font-family:inherit;}
+.font-settings-card{margin-top:15px;}
+.font-setting-row{margin-bottom:18px;}
+.font-setting-row label{display:block;font-weight:700;margin-bottom:7px;}
+.font-setting-row select,.font-setting-row input[type=range]{width:100%;}
+.font-setting-row select{padding:11px;border:1px solid var(--border);border-radius:10px;background:var(--card);color:var(--text);}
+.font-range{accent-color:var(--primary);}
+.font-value{display:inline-block;margin-top:5px;color:var(--muted);font-size:.9em;}
+.font-preview{margin-top:15px;padding:18px;border-radius:14px;border:1px solid var(--border);background:var(--bg);}
+.font-preview-title{font-size:1.2em;font-weight:700;margin-bottom:8px;}
+
+
+/* ========================= STUDENT HUB PRO 3.0 UPGRADE ========================= */
+:root{--glass:rgba(255,255,255,.72);--shadow:0 12px 35px rgba(15,23,42,.08);--radius:22px}
+body{background:radial-gradient(circle at 10% 0%,rgba(99,102,241,.10),transparent 32%),radial-gradient(circle at 90% 10%,rgba(124,58,237,.09),transparent 30%),var(--bg)}
+.card,.stat,.quick,.task,.course,.exam,.notice{box-shadow:var(--shadow);transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease}
+.card:hover,.stat:hover,.quick:hover{transform:translateY(-2px);box-shadow:0 16px 40px rgba(15,23,42,.11)}
+.welcome{box-shadow:0 18px 45px rgba(79,70,229,.24);position:relative;overflow:hidden}
+.welcome:after{content:"";position:absolute;width:180px;height:180px;border-radius:50%;right:-60px;top:-70px;background:rgba(255,255,255,.12)}
+.section-title{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:18px 0 10px}
+.badge{display:inline-flex;align-items:center;gap:5px;padding:5px 9px;border-radius:999px;background:rgba(79,70,229,.10);color:var(--primary);font-size:11px;font-weight:700}
+.today-grid,.analytics-grid,.campus-grid,.community-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.feature-card{padding:16px;border:1px solid var(--border);border-radius:18px;background:var(--card)}
+.feature-card h4{margin-bottom:6px}.feature-card p{color:var(--muted);font-size:13px;line-height:1.5}
+.notification-item{display:flex;gap:11px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--border)}
+.notification-item:last-child{border-bottom:0}.notification-dot{width:9px;height:9px;border-radius:50%;background:var(--primary);margin-top:6px;flex:none}.notification-item.unread{font-weight:600}
+.metric-row{display:flex;justify-content:space-between;gap:12px;margin:10px 0;font-size:13px}.metric-row strong{font-size:15px}.mini-progress{height:8px;background:var(--border);border-radius:99px;overflow:hidden}.mini-progress span{display:block;height:100%;background:linear-gradient(90deg,var(--primary),var(--secondary));border-radius:99px}
+.streak{display:flex;align-items:center;justify-content:space-between;padding:15px;border-radius:18px;background:linear-gradient(135deg,#fff7ed,#fef3c7);color:#78350f}.xp{font-size:25px;font-weight:800}.dark .streak{background:linear-gradient(135deg,#422006,#713f12);color:#ffedd5}
+.copilot-card{border:1px solid #a5b4fc;background:linear-gradient(135deg,rgba(238,242,255,.95),rgba(245,243,255,.95))}.dark .copilot-card{background:linear-gradient(135deg,#1e1b4b,#312e81)}
+.quick-links{display:flex;gap:8px;overflow-x:auto;padding-bottom:3px}.quick-links button{white-space:nowrap;border:1px solid var(--border);background:var(--card);color:var(--text);border-radius:999px;padding:9px 13px}
+@media(max-width:650px){.today-grid,.analytics-grid,.campus-grid,.community-grid{grid-template-columns:1fr}.feature-card{padding:14px}}
+@media(min-width:900px){main{max-width:1180px}.today-grid,.analytics-grid,.campus-grid,.community-grid{grid-template-columns:repeat(4,1fr)}}
+
+</style>
+</head>
+
+<body>
+
+<!-- ================= PIN LOCK SCREEN ================= -->
+
+<div id="pinLock">
+
+<div class="pin-box">
+
+<div class="pin-logo">🎓</div>
+
+<h2>Student Hub Pro</h2>
+
+<p>Enter your PIN to continue</p>
+
+<input
+type="password"
+id="unlockPIN"
+maxlength="6"
+inputmode="numeric"
+placeholder="••••">
+
+<p
+class="pin-error"
+id="pinError">
+</p>
+
+<button
+class="btn"
+style="width:100%"
+onclick="unlockApp()">
+🔓 Unlock
+</button>
+
+</div>
+
+</div>
+
+
+<header>
+
+<div class="logo">
+🎓 Student Hub Pro
+</div>
+
+<div class="header-right">
+
+<span id="headerName">
+Student
+</span>
+
+<div
+class="header-avatar"
+id="headerAvatar">
+S
+</div>
+
+</div>
+
+</header>
+
+
+<main>
+
+<!-- ================= HOME ================= -->
+
+<section id="home" class="page active">
+
+<div class="welcome">
+
+<h2>
+Welcome, <span id="welcomeName">Student</span> 👋
+</h2>
+
+<p>
+Your complete academic dashboard.
+</p>
+
+</div>
+
+
+<!-- SEARCH -->
+
+<div class="card">
+
+<h3>🔎 Search the Web</h3>
+
+<div class="search-box">
+
+<input
+id="webSearch"
+placeholder="Search Google...">
+
+<button
+class="btn"
+onclick="webSearch()">
+Search
+</button>
+
+</div>
+
+</div>
+
+
+<!-- AI ASSISTANT -->
+
+<div class="card ai-card">
+
+<div class="ai-header">
+
+<div class="ai-avatar">
+🤖
+</div>
+
+<div>
+
+<h3>
+Student AI Assistant
+</h3>
+
+<span class="ai-status">
+● Online
+</span>
+
+</div>
+
+</div>
+
+
+<div
+class="ai-chat"
+id="aiChat">
+
+<div class="ai-message bot">
+
+👋 Hello! I'm your Student Hub Assistant.
+Ask me about studying, HTML, CSS, JavaScript,
+Python, CGPA, assignments or your Student Hub.
+
+</div>
+
+</div>
+
+
+<div class="ai-input-row">
+
+<input
+type="text"
+id="aiInput"
+placeholder="Ask your assistant..."
+autocomplete="off">
+
+<button
+class="ai-button ai-mic"
+onclick="startAIListening()"
+title="Speak">
+
+🎤
+
+</button>
+
+<button
+class="ai-button ai-send"
+onclick="sendAIMessage()"
+title="Send">
+
+➤
+
+</button>
+
+</div>
+
+
+<div class="ai-suggestions">
+
+<button onclick="askAI('Explain HTML to me')">
+🌐 HTML
+</button>
+
+<button onclick="askAI('Teach me Python')">
+🐍 Python
+</button>
+
+<button onclick="askAI('Help me with CGPA')">
+🎓 CGPA
+</button>
+
+<button onclick="askAI('Create a study plan')">
+📚 Study Plan
+</button>
+
+</div>
+
+</div>
+
+
+<!-- DASHBOARD STATS -->
+
+<div class="dashboard-grid">
+
+<div class="stat">
+
+<div class="stat-icon">
+🎓
+</div>
+
+CGPA
+
+<div
+class="stat-number"
+id="dashboardCGPA">
+0.00
+</div>
+
+</div>
+
+
+<div class="stat">
+
+<div class="stat-icon">
+📝
+</div>
+
+Tasks
+
+<div
+class="stat-number"
+id="dashboardTasks">
+0
+</div>
+
+</div>
+
+
+<div class="stat">
+
+<div class="stat-icon">
+📊
+</div>
+
+Attendance
+
+<div
+class="stat-number"
+id="dashboardAttendance">
+0%
+</div>
+
+</div>
+
+
+<div class="stat">
+
+<div class="stat-icon">
+⏱️
+</div>
+
+Study Hours
+
+<div
+class="stat-number"
+id="dashboardStudy">
+0
+</div>
+
+</div>
+
+</div>
+
+
+<!-- QUICK ACTIONS -->
+
+<div class="card">
+
+<h3>
+⚡ Quick Actions
+</h3>
+
+<div class="quick-grid">
+
+<button
+class="quick"
+onclick="showPage('calculator')">
+
+<span class="quick-icon">
+🧮
+</span>
+
+Calculator
+
+</button>
+
+
+<button
+class="quick"
+onclick="showPage('cgpa')">
+
+<span class="quick-icon">
+🎓
+</span>
+
+GPA
+
+</button>
+
+
+<button
+class="quick"
+onclick="showPage('planner')">
+
+<span class="quick-icon">
+📖
+</span>
+
+Study
+
+</button>
+
+
+<button
+class="quick"
+onclick="showPage('tasks')">
+
+<span class="quick-icon">
+📝
+</span>
+
+Tasks
+
+</button>
+
+
+<button
+class="quick"
+onclick="showPage('timetable')">
+
+<span class="quick-icon">
+📅
+</span>
+
+Timetable
+
+</button>
+
+
+<button
+class="quick"
+onclick="showPage('exams')">
+
+<span class="quick-icon">
+⏰
+</span>
+
+Exams
+
+</button>
+
+
+<button
+class="quick"
+onclick="showPage('expenses')">
+
+<span class="quick-icon">
+💰
+</span>
+
+Finance
+
+</button>
+
+
+<button
+class="quick"
+onclick="showPage('profile')">
+
+<span class="quick-icon">
+👤
+</span>
+
+Profile
+
+</button>
+
+</div>
+
+</div>
+
+
+<!-- GOAL -->
+
+<div class="card">
+
+<h3>
+🎯 Academic Goal
+</h3>
+
+<p id="goalText">
+No goal set.
+</p>
+
+<div class="progress">
+
+<div
+class="progress-bar"
+id="goalProgress"
+style="width:0%">
+</div>
+
+</div>
+
+<p id="goalPercent">
+0%
+</p>
+
+</div>
+
+
+<!-- UPCOMING TASKS -->
+
+<div class="card">
+
+<h3>
+📌 Upcoming Tasks
+</h3>
+
+<div id="upcomingTasks">
+No upcoming tasks.
+</div>
+
+</div>
+
+
+<!-- NEXT EXAM -->
+
+<div class="card">
+
+<h3>
+⏰ Next Exam
+</h3>
+
+<div id="nextExam">
+No exam scheduled.
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= COURSES ================= -->
+
+<section id="courses" class="page">
+
+<h2>
+📚 Courses & Semester
+</h2>
+
+<div class="card">
+
+<div class="grid">
+
+<div class="field">
+
+<label>
+Course Code
+</label>
+
+<input
+id="courseCode"
+placeholder="CSC101">
+
+</div>
+
+
+<div class="field">
+
+<label>
+Course Name
+</label>
+
+<input
+id="courseName"
+placeholder="Introduction to Computing">
+
+</div>
+
+</div>
+
+
+<div class="grid">
+
+<div class="field">
+
+<label>
+Credit Units
+</label>
+
+<input
+type="number"
+id="courseUnits"
+placeholder="3">
+
+</div>
+
+
+<div class="field">
+
+<label>
+Semester
+</label>
+
+<select id="courseSemester">
+
+<option>
+First Semester
+</option>
+
+<option>
+Second Semester
+</option>
+
+</select>
+
+</div>
+
+</div>
+
+
+<button
+class="btn"
+onclick="addCourse()">
+
+➕ Add Course
+
+</button>
+
+</div>
+
+<div id="courseList"></div>
+
+</section>
+
+
+<!-- ================= CALCULATOR ================= -->
+
+<section id="calculator" class="page">
+
+<h2>
+🧮 Scientific Calculator
+</h2>
+
+<div class="card">
+
+<input
+class="calc-display"
+id="calcDisplay"
+readonly
+placeholder="0">
+
+
+<div class="calc-buttons">
+
+<button onclick="calcClear()">AC</button>
+<button onclick="calcBack()">⌫</button>
+<button onclick="calcInput('%')">%</button>
+<button class="operator" onclick="calcInput('/')">÷</button>
+
+<button onclick="calcInput('7')">7</button>
+<button onclick="calcInput('8')">8</button>
+<button onclick="calcInput('9')">9</button>
+<button class="operator" onclick="calcInput('*')">×</button>
+
+<button onclick="calcInput('4')">4</button>
+<button onclick="calcInput('5')">5</button>
+<button onclick="calcInput('6')">6</button>
+<button class="operator" onclick="calcInput('-')">−</button>
+
+<button onclick="calcInput('1')">1</button>
+<button onclick="calcInput('2')">2</button>
+<button onclick="calcInput('3')">3</button>
+<button class="operator" onclick="calcInput('+')">+</button>
+
+<button onclick="calcInput('0')">0</button>
+<button onclick="calcInput('.')">.</button>
+<button onclick="calcFunction('sqrt')">√</button>
+<button class="operator" onclick="calculate()">=</button>
+
+<button onclick="calcFunction('sin')">sin</button>
+<button onclick="calcFunction('cos')">cos</button>
+<button onclick="calcFunction('tan')">tan</button>
+<button onclick="calcFunction('log')">log</button>
+
+<button onclick="calcFunction('square')">x²</button>
+<button onclick="calcFunction('cube')">x³</button>
+<button onclick="calcFunction('factorial')">n!</button>
+<button onclick="calcInput('Math.PI')">π</button>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= CGPA ================= -->
+
+<section id="cgpa" class="page">
+
+<h2>
+🎓 GPA / CGPA Calculator
+</h2>
+
+<div class="card">
+
+<div class="field">
+
+<label>
+Total Quality Points
+</label>
+
+<input
+type="number"
+id="qualityPoints">
+
+</div>
+
+
+<div class="field">
+
+<label>
+Total Credit Units
+</label>
+
+<input
+type="number"
+id="creditUnits">
+
+</div>
+
+
+<button
+class="btn"
+onclick="calculateCGPA()">
+
+Calculate CGPA
+
+</button>
+
+
+<h2 id="cgpaResult">
+CGPA: 0.00
+</h2>
+
+</div>
+
+</section>
+
+
+<!-- ================= TASKS ================= -->
+
+<section id="tasks" class="page">
+
+<h2>
+📝 Assignments & Tasks
+</h2>
+
+<div class="card">
+
+<div class="field">
+
+<label>
+Task
+</label>
+
+<input
+id="taskName"
+placeholder="Assignment or project">
+
+</div>
+
+
+<div class="grid">
+
+<div class="field">
+
+<label>
+Priority
+</label>
+
+<select id="taskPriority">
+
+<option value="high">
+High
+</option>
+
+<option value="medium">
+Medium
+</option>
+
+<option value="low">
+Low
+</option>
+
+</select>
+
+</div>
+
+
+<div class="field">
+
+<label>
+Deadline
+</label>
+
+<input
+type="date"
+id="taskDeadline">
+
+</div>
+
+</div>
+
+
+<button
+class="btn"
+onclick="addTask()">
+
+➕ Add Task
+
+</button>
+
+</div>
+
+<div id="taskList"></div>
+
+</section>
+
+
+<!-- ================= TIMETABLE ================= -->
+
+<section id="timetable" class="page">
+
+<h2>
+📅 Smart Timetable
+</h2>
+
+<div class="card">
+
+<div class="field">
+
+<label>
+Day
+</label>
+
+<select id="ttDay">
+
+<option>Monday</option>
+<option>Tuesday</option>
+<option>Wednesday</option>
+<option>Thursday</option>
+<option>Friday</option>
+<option>Saturday</option>
+
+</select>
+
+</div>
+
+
+<div class="field">
+
+<label>
+Course / Activity
+</label>
+
+<input id="ttSubject">
+
+</div>
+
+
+<div class="field">
+
+<label>
+Time
+</label>
+
+<input
+id="ttTime"
+placeholder="10:00 AM">
+
+</div>
+
+
+<div class="field">
+
+<label>
+Venue
+</label>
+
+<input
+id="ttVenue"
+placeholder="Lecture Hall">
+
+</div>
+
+
+<button
+class="btn"
+onclick="addTimetable()">
+
+➕ Add Class
+
+</button>
+
+</div>
+
+<div id="timetableList"></div>
+
+</section>
+
+
+<!-- ================= EXAMS ================= -->
+
+<section id="exams" class="page">
+
+<h2>
+⏰ Exam Center
+</h2>
+
+<div class="card">
+
+<div class="field">
+
+<label>
+Exam / Course
+</label>
+
+<input
+id="examName"
+placeholder="CSC101">
+
+</div>
+
+
+<div class="field">
+
+<label>
+Exam Date
+</label>
+
+<input
+type="date"
+id="examDate">
+
+</div>
+
+
+<button
+class="btn"
+onclick="addExam()">
+
+➕ Add Exam
+
+</button>
+
+</div>
+
+<div id="examList"></div>
+
+</section>
+
+
+<!-- ================= STUDY ================= -->
+
+<section id="planner" class="page">
+
+<h2>
+📖 Study Planner
+</h2>
+
+<div class="card">
+
+<div class="field">
+
+<label>
+Subject
+</label>
+
+<input id="studySubject">
+
+</div>
+
+
+<div class="field">
+
+<label>
+Study Hours
+</label>
+
+<input
+type="number"
+id="studyHours">
+
+</div>
+
+
+<button
+class="btn"
+onclick="addStudyPlan()">
+
+➕ Add Study Session
+
+</button>
+
+<button
+class="btn success"
+onclick="saveStudyHours()">
+
+⏱️ Add Completed Hours
+
+</button>
+
+</div>
+
+<div id="studyList"></div>
+
+</section>
+
+
+<!-- ================= NOTES ================= -->
+
+<section id="notes" class="page">
+
+<h2>
+📝 Study Notes
+</h2>
+
+<div class="card">
+
+<div class="field">
+
+<label>
+Title
+</label>
+
+<input id="noteTitle">
+
+</div>
+
+
+<div class="field">
+
+<label>
+Notes
+</label>
+
+<textarea id="noteContent"></textarea>
+
+</div>
+
+
+<button
+class="btn"
+onclick="addNote()">
+
+💾 Save Note
+
+</button>
+
+</div>
+
+<div id="notesList"></div>
+
+</section>
+
+
+<!-- ================= FINANCE ================= -->
+
+<section id="expenses" class="page">
+
+<h2>
+💰 Student Finance
+</h2>
+
+<div class="card">
+
+<div class="field">
+
+<label>
+Expense
+</label>
+
+<input
+id="expenseName"
+placeholder="Transport">
+
+</div>
+
+
+<div class="field">
+
+<label>
+Amount (₦)
+</label>
+
+<input
+type="number"
+id="expenseAmount">
+
+</div>
+
+
+<button
+class="btn"
+onclick="addExpense()">
+
+➕ Add Expense
+
+</button>
+
+</div>
+
+
+<div class="card">
+
+<h2>
+Total Spending:
+₦<span id="totalExpenses">0</span>
+</h2>
+
+</div>
+
+<div id="expenseList"></div>
+
+</section>
+
+
+<!-- ================= ATTENDANCE ================= -->
+
+<section id="attendance" class="page">
+
+<h2>
+📊 Attendance
+</h2>
+
+<div class="card">
+
+<div class="grid">
+
+<input
+type="number"
+id="attended"
+placeholder="Classes attended">
+
+<input
+type="number"
+id="totalClasses"
+placeholder="Total classes">
+
+</div>
+
+
+<button
+class="btn"
+onclick="calculateAttendance()">
+
+Calculate
+
+</button>
+
+
+<h2 id="attendanceResult">
+Attendance: 0%
+</h2>
+
+</div>
+
+</section>
+
+
+<!-- ================= GOALS ================= -->
+
+<section id="goals" class="page">
+
+<h2>
+🎯 Academic Goals
+</h2>
+
+<div class="card">
+
+<div class="field">
+
+<label>
+Goal
+</label>
+
+<input
+id="goalName"
+placeholder="Get 4.5 CGPA">
+
+</div>
+
+
+<div class="field">
+
+<label>
+Progress %
+</label>
+
+<input
+type="number"
+id="goalValue"
+min="0"
+max="100">
+
+</div>
+
+
+<button
+class="btn"
+onclick="saveGoal()">
+
+💾 Save Goal
+
+</button>
+
+</div>
+
+</section>
+
+
+<!-- ================= TOOLS ================= -->
+
+<section id="tools" class="page">
+
+<h2>
+🛠️ Student Tools
+</h2>
+
+
+<div class="card">
+
+<h3>
+Percentage Calculator
+</h3>
+
+<div class="grid">
+
+<input
+type="number"
+id="percentNumber"
+placeholder="Number">
+
+<input
+type="number"
+id="percentTotal"
+placeholder="Total">
+
+</div>
+
+
+<button
+class="btn"
+onclick="calculatePercentage()">
+
+Calculate
+
+</button>
+
+
+<h3 id="percentageResult">
+Result: 0%
+</h3>
+
+</div>
+
+
+<div class="card">
+
+<h3>
+Age Calculator
+</h3>
+
+<input
+type="date"
+id="birthDate">
+
+<button
+class="btn"
+onclick="calculateAge()">
+
+Calculate Age
+
+</button>
+
+
+<h3 id="ageResult">
+Age: -
+</h3>
+
+</div>
+
+</section>
+
+
+<!-- ================= ID ================= -->
+
+<section id="studentID" class="page">
+
+<h2>
+🪪 Digital Student ID
+</h2>
+
+<div class="id-card">
+
+<div class="id-top">
+
+<div
+class="id-avatar"
+id="idAvatar">
+S
+</div>
+
+<div>
+
+<h2>
+STUDENT HUB
+</h2>
+
+<p>
+DIGITAL STUDENT ID
+</p>
+
+</div>
+
+</div>
+
+
+<div class="id-info">
+
+<h2 id="idName">
+Student
+</h2>
+
+<p>
+🆔 <span id="idMatric">
+Matric Number
+</span>
+</p>
+
+<p>
+📚 <span id="idDepartment">
+Department
+</span>
+</p>
+
+<p>
+🏫 <span id="idUniversity">
+University
+</span>
+</p>
+
+<p>
+🎓 <span id="idLevel">
+Level
+</span>
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= PROFILE ================= -->
+
+<section id="profile" class="page">
+
+<h2>
+👤 My Profile
+</h2>
+
+<div class="card">
+
+<div
+class="profile-picture"
+id="profileAvatar">
+S
+</div>
+
+
+<div class="field">
+
+<label>
+Profile Picture
+</label>
+
+<input
+type="file"
+id="profilePhotoInput"
+accept="image/*"
+disabled
+onchange="handleProfilePhoto(event)">
+
+</div>
+
+
+<div class="field">
+
+<label>
+Full Name
+</label>
+
+<input
+id="profileName"
+disabled>
+
+</div>
+
+
+<div class="field">
+
+<label>
+Matric Number
+</label>
+
+<input
+id="profileMatric"
+disabled>
+
+</div>
+
+
+<div class="field">
+
+<label>
+Department
+</label>
+
+<input
+id="profileDepartment"
+disabled>
+
+</div>
+
+
+<div class="field">
+
+<label>
+Level
+</label>
+
+<select
+id="profileLevel"
+disabled>
+
+<option value="">
+Select Level
+</option>
+
+<option>
+100 Level
+</option>
+
+<option>
+200 Level
+</option>
+
+<option>
+300 Level
+</option>
+
+<option>
+400 Level
+</option>
+
+<option>
+500 Level
+</option>
+
+</select>
+
+</div>
+
+
+<div class="field">
+
+<label>
+University
+</label>
+
+<input
+id="profileUniversity"
+disabled>
+
+</div>
+
+
+<div class="field">
+
+<label>
+Email
+</label>
+
+<input
+type="email"
+id="profileEmail"
+disabled>
+
+</div>
+
+
+<div class="field">
+
+<label>
+Phone
+</label>
+
+<input
+id="profilePhone"
+disabled>
+
+</div>
+
+
+<div class="profile-actions">
+
+<button
+class="btn warning"
+id="editProfileBtn"
+onclick="editProfile()">
+
+✏️ Edit
+
+</button>
+
+
+<button
+class="btn success"
+id="saveProfileBtn"
+onclick="saveProfile()"
+style="display:none">
+
+💾 Save
+
+</button>
+
+</div>
+
+
+<button
+class="btn secondary"
+id="cancelProfileBtn"
+onclick="cancelProfileEdit()"
+style="display:none;width:100%">
+
+Cancel
+
+</button>
+
+
+<button
+class="btn danger"
+id="removePhotoBtn"
+onclick="removeProfilePhoto()"
+style="display:none;width:100%">
+
+Remove Photo
+
+</button>
+
+
+<p id="profileMessage"></p>
+
+</div>
+
+</section>
+
+
+<!-- ================= VOICE ================= -->
+
+<section id="voice" class="page">
+
+<h2>
+🎙️ Voice Recorder
+</h2>
+
+<div class="card">
+
+<button
+class="btn"
+onclick="startRecording()">
+
+🎙️ Start
+
+</button>
+
+
+<button
+class="btn danger"
+onclick="stopRecording()">
+
+⏹️ Stop
+
+</button>
+
+
+<p id="recordStatus">
+Ready
+</p>
+
+</div>
+
+<div id="recordingsList"></div>
+
+</section>
+
+
+<!-- ================= AI PAGE ================= -->
+
+<section id="assistant" class="page">
+
+<h2>
+🤖 Student AI Assistant
+</h2>
+
+<div class="card ai-card">
+
+<div class="ai-header">
+
+<div class="ai-avatar">
+🤖
+</div>
+
+<div>
+
+<h3>
+Talk to Student Hub AI
+</h3>
+
+<span class="ai-status">
+● Ready
+</span>
+
+</div>
+
+</div>
+
+
+<div
+class="ai-chat"
+id="aiChatPage">
+
+<div class="ai-message bot">
+
+Hello! 👋 Ask me a question.
+
+</div>
+
+</div>
+
+
+<div class="ai-input-row">
+
+<input
+type="text"
+id="aiInputPage"
+placeholder="Type your question...">
+
+<button
+class="ai-button ai-mic"
+onclick="startAIListening('aiInputPage')">
+
+🎤
+
+</button>
+
+<button
+class="ai-button ai-send"
+onclick="sendAIMessage('aiInputPage','aiChatPage')">
+
+➤
+
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= NOTICE ================= -->
+
+<section id="notices" class="page">
+
+<h2>
+📢 Notice Board
+</h2>
+
+<div class="card">
+
+<div class="field">
+
+<label>
+Notice
+</label>
+
+<input
+id="noticeText"
+placeholder="Enter announcement">
+
+</div>
+
+
+<button
+class="btn"
+onclick="addNotice()">
+
+📢 Add Notice
+
+</button>
+
+</div>
+
+<div id="noticeList"></div>
+
+</section>
+
+
+<!-- ================= SETTINGS ================= -->
+
+<section id="settings" class="page">
+
+<h2>
+⚙️ Settings
+</h2>
+
+
+<div class="card">
+
+<h3>
+🌙 Appearance
+</h3>
+
+<button
+class="btn"
+onclick="toggleDarkMode()">
+
+Toggle Dark Mode
+
+</button>
+
+</div>
+
+
+<div class="card">
+
+<h3>
+🔐 App PIN
+</h3>
+
+<p class="empty">
+Create a 4–6 digit PIN to lock Student Hub Pro.
+</p>
+
+<input
+type="password"
+id="pinInput"
+maxlength="6"
+inputmode="numeric"
+placeholder="4-6 digit PIN">
+
+<button
+class="btn"
+onclick="savePIN()">
+
+Save PIN
+
+</button>
+
+<button
+class="btn danger"
+onclick="removePIN()">
+
+Remove PIN
+
+</button>
+
+</div>
+
+
+
+<div class="card font-settings-card">
+<h3>🔤 Font Settings</h3>
+<p class="empty">Customize the font used throughout Student Hub Pro.</p>
+<div class="font-setting-row">
+<label for="fontFamily">Font Family</label>
+<select id="fontFamily" onchange="updateFontSettings()">
+<option value="Arial, sans-serif">Arial</option>
+<option value="Inter, Arial, sans-serif">Inter</option>
+<option value="Poppins, Arial, sans-serif">Poppins</option>
+<option value="Roboto, Arial, sans-serif">Roboto</option>
+<option value="Montserrat, Arial, sans-serif">Montserrat</option>
+<option value="Nunito, Arial, sans-serif">Nunito</option>
+<option value="Open Sans, Arial, sans-serif">Open Sans</option>
+<option value="Georgia, serif">Georgia</option>
+<option value="Times New Roman, serif">Times New Roman</option>
+<option value="Verdana, sans-serif">Verdana</option>
+</select>
+</div>
+<div class="font-setting-row">
+<label for="fontSize">Font Size</label>
+<input class="font-range" type="range" id="fontSize" min="12" max="24" step="1" value="16" oninput="updateFontSettings()">
+<span class="font-value"><span id="fontSizeValue">16</span>px</span>
+</div>
+<div class="font-setting-row">
+<label for="fontWeight">Font Weight</label>
+<select id="fontWeight" onchange="updateFontSettings()">
+<option value="400">Regular (400)</option>
+<option value="500">Medium (500)</option>
+<option value="600">Semi-bold (600)</option>
+<option value="700">Bold (700)</option>
+</select>
+</div>
+<div class="font-setting-row">
+<label for="letterSpacing">Letter Spacing</label>
+<input class="font-range" type="range" id="letterSpacing" min="-1" max="3" step="0.1" value="0" oninput="updateFontSettings()">
+<span class="font-value"><span id="letterSpacingValue">0.0</span>px</span>
+</div>
+<div class="font-setting-row">
+<label for="lineHeight">Line Height</label>
+<input class="font-range" type="range" id="lineHeight" min="1.1" max="2" step="0.1" value="1.5" oninput="updateFontSettings()">
+<span class="font-value"><span id="lineHeightValue">1.5</span></span>
+</div>
+<div id="fontPreview" class="font-preview">
+<div class="font-preview-title">Font Preview</div>
+Student Hub Pro — Your academic life, organized.
+</div>
+<button class="btn" onclick="saveFontSettings()">💾 Save Font Settings</button>
+<button class="btn secondary" onclick="resetFontSettings()">↩️ Reset Fonts</button>
+</div>
+
+<div class="card">
+
+<h3>
+💾 Backup
+</h3>
+
+<button
+class="btn"
+onclick="backupData()">
+
+Download Backup
+
+</button>
+
+</div>
+
+
+<div class="card">
+
+<h3>
+♻️ Restore
+</h3>
+
+<input
+type="file"
+id="restoreFile"
+accept=".json">
+
+<button
+class="btn"
+onclick="restoreData()">
+
+Restore Backup
+
+</button>
+
+</div>
+
+
+<div class="card">
+
+<h3>
+⚠️ Reset
+</h3>
+
+<button
+class="btn danger"
+onclick="resetApp()">
+
+Delete All Data
+
+</button>
+
+</div>
+
+</section>
+
+</main>
+
+
+<!-- ================= BOTTOM NAV ================= -->
+
+
+<!-- ================= 3.0 UPGRADE DASHBOARD ================= -->
+<div id="upgradeDashboard" class="card" style="margin-top:15px">
+  <div class="section-title"><h3>✨ Today at a Glance</h3><span class="badge">Student Hub 3.0</span></div>
+  <div class="today-grid">
+    <div class="feature-card"><h4>📅 Today's Classes</h4><div id="todayClasses"><p class="empty">Add classes to your timetable.</p></div></div>
+    <div class="feature-card"><h4>⏳ Deadlines</h4><div id="todayDeadlines"><p class="empty">No urgent deadlines.</p></div></div>
+    <div class="feature-card"><h4>🎯 Daily Goal</h4><div id="dailyGoalText">0% complete</div><div class="mini-progress" style="margin-top:9px"><span id="dailyGoalBar" style="width:0%"></span></div></div>
+    <div class="feature-card"><h4>🔔 Notifications</h4><div id="notificationSummary">You're all caught up.</div><button class="btn" onclick="showPage('hubNotifications')">View notifications</button></div>
+  </div>
+</div>
+
+<div class="card copilot-card">
+  <div class="section-title"><h3>🤖 Student Copilot</h3><span class="badge">Smart Study</span></div>
+  <p style="color:var(--muted);margin-bottom:10px">Get study suggestions based on your tasks, exams, goals and activity.</p>
+  <div id="copilotAdvice" class="feature-card">Analyzing your academic dashboard...</div>
+  <div class="quick-links" style="margin-top:10px"><button onclick="copilotAction('revision')">📚 Plan revision</button><button onclick="copilotAction('tasks')">📝 Prioritize tasks</button><button onclick="copilotAction('exam')">⏰ Exam strategy</button><button onclick="copilotAction('gpa')">🎓 Improve GPA</button></div>
+</div>
+
+<div class="card"><div class="section-title"><h3>🔥 Study Streak</h3><span class="badge">Gamified</span></div><div class="streak"><div><div class="xp" id="hubStreak">0 days</div><div>Current study streak</div></div><div><strong id="hubXP">0 XP</strong><br><small>Keep learning!</small></div></div></div>
+
+<nav class="bottom-nav">
+
+<button
+class="active"
+onclick="showPage('home',this)">
+
+🏠
+<br>
+Home
+
+</button>
+
+
+<button
+onclick="showPage('courses',this)">
+
+📚
+<br>
+Courses
+
+</button>
+
+
+<button
+onclick="showPage('tasks',this)">
+
+📝
+<br>
+Tasks
+
+</button>
+
+
+<button
+onclick="showPage('calculator',this)">
+
+🧮
+<br>
+Calc
+
+</button>
+
+
+<button
+onclick="showPage('assistant',this)">
+
+🤖
+<br>
+AI
+
+</button>
+
+
+<button
+onclick="showPage('exams',this)">
+
+⏰
+<br>
+Exams
+
+</button>
+
+
+<button
+onclick="showPage('profile',this)">
+
+👤
+<br>
+Profile
+
+</button>
+
+
+<button
+onclick="showPage('settings',this)">
+
+⚙️
+<br>
+Settings
+
+</button>
+
+</nav>
+
+
+<script>
+
+/* ================= NAVIGATION ================= */
+
+function showPage(id,button){
+
+document.querySelectorAll(".page")
+.forEach(p=>p.classList.remove("active"));
+
+const page=document.getElementById(id);
+
+if(page){
+page.classList.add("active");
+}
+
+document.querySelectorAll(".bottom-nav button")
+.forEach(b=>b.classList.remove("active"));
+
+if(button){
+button.classList.add("active");
+}
+
+window.scrollTo(0,0);
+
+}
+
+
+/* ================= SEARCH ================= */
+
+function webSearch(){
+
+const q=
+document.getElementById("webSearch")
+.value.trim();
+
+if(!q){
+
+alert("Enter something to search.");
+
+return;
+
+}
+
+window.open(
+"https://www.google.com/search?q="+
+encodeURIComponent(q),
+"_blank"
+);
+
+}
+
+
+function quickSearch(q){
+
+window.open(
+"https://www.google.com/search?q="+
+encodeURIComponent(q),
+"_blank"
+);
+
+}
+
+
+/* ================= CALCULATOR ================= */
+
+function calcInput(v){
+
+document.getElementById("calcDisplay")
+.value+=v;
+
+}
+
+
+function calcClear(){
+
+document.getElementById("calcDisplay")
+.value="";
+
+}
+
+
+function calcBack(){
+
+let d=
+document.getElementById("calcDisplay");
+
+d.value=d.value.slice(0,-1);
+
+}
+
+
+function calculate(){
+
+let d=
+document.getElementById("calcDisplay");
+
+try{
+
+let exp=d.value
+.replace(/%/g,"/100");
+
+d.value=Function(
+'"use strict";return ('+exp+')'
+)();
+
+}catch(e){
+
+d.value="Error";
+
+}
+
+}
+
+
+function calcFunction(type){
+
+let d=
+document.getElementById("calcDisplay");
+
+let v=parseFloat(d.value);
+
+if(isNaN(v)){
+
+d.value="Error";
+
+return;
+
+}
+
+let r;
+
+if(type==="sqrt")
+r=Math.sqrt(v);
+
+if(type==="square")
+r=v*v;
+
+if(type==="cube")
+r=v*v*v;
+
+if(type==="log")
+r=Math.log10(v);
+
+if(type==="sin")
+r=Math.sin(v*Math.PI/180);
+
+if(type==="cos")
+r=Math.cos(v*Math.PI/180);
+
+if(type==="tan")
+r=Math.tan(v*Math.PI/180);
+
+if(type==="factorial"){
+
+if(v<0||!Number.isInteger(v)){
+
+d.value="Error";
+
+return;
+
+}
+
+r=1;
+
+for(let i=1;i<=v;i++){
+
+r*=i;
+
+}
+
+}
+
+d.value=r;
+
+}
+
+
+/* ================= CGPA ================= */
+
+function calculateCGPA(){
+
+let qp=parseFloat(
+document.getElementById("qualityPoints").value
+);
+
+let cu=parseFloat(
+document.getElementById("creditUnits").value
+);
+
+if(isNaN(qp)||isNaN(cu)||cu<=0){
+
+alert("Enter valid values.");
+
+return;
+
+}
+
+let cgpa=qp/cu;
+
+document.getElementById("cgpaResult")
+.innerText=
+"CGPA: "+cgpa.toFixed(2);
+
+localStorage.setItem(
+"currentCGPA",
+cgpa.toFixed(2)
+);
+
+updateDashboard();
+
+}
+
+
+/* ================= COURSES ================= */
+
+function getCourses(){
+
+return JSON.parse(
+localStorage.getItem("studentCourses")||"[]"
+);
+
+}
+
+
+function addCourse(){
+
+let code=
+document.getElementById("courseCode")
+.value.trim();
+
+let name=
+document.getElementById("courseName")
+.value.trim();
+
+let units=
+document.getElementById("courseUnits")
+.value;
+
+let semester=
+document.getElementById("courseSemester")
+.value;
+
+if(!code||!name||!units){
+
+alert("Complete all course fields.");
+
+return;
+
+}
+
+let courses=getCourses();
+
+courses.push({
+code,
+name,
+units,
+semester
+});
+
+localStorage.setItem(
+"studentCourses",
+JSON.stringify(courses)
+);
+
+document.getElementById("courseCode").value="";
+document.getElementById("courseName").value="";
+document.getElementById("courseUnits").value="";
+
+renderCourses();
+
+}
+
+
+function renderCourses(){
+
+let courses=getCourses();
+
+let box=
+document.getElementById("courseList");
+
+box.innerHTML="";
+
+if(!courses.length){
+
+box.innerHTML=
+'<div class="card empty">No courses added yet.</div>';
+
+return;
+
+}
+
+courses.forEach((c,i)=>{
+
+box.innerHTML+=`
+
+<div class="course">
+
+<h3>
+${escapeHTML(c.code)} -
+${escapeHTML(c.name)}
+</h3>
+
+<p>
+🎓 ${escapeHTML(c.semester)}
+</p>
+
+<p>
+📊 ${escapeHTML(c.units)}
+Credit Unit(s)
+</p>
+
+<button
+class="btn danger"
+onclick="deleteCourse(${i})">
+
+Delete
+
+</button>
+
+</div>
+
+`;
+
+});
+
+}
+
+
+function deleteCourse(i){
+
+let courses=getCourses();
+
+courses.splice(i,1);
+
+localStorage.setItem(
+"studentCourses",
+JSON.stringify(courses)
+);
+
+renderCourses();
+
+}
+
+
+/* ================= TASKS ================= */
+
+function getTasks(){
+
+return JSON.parse(
+localStorage.getItem("studentTasks")||"[]"
+);
+
+}
+
+
+function addTask(){
+
+let name=
+document.getElementById("taskName")
+.value.trim();
+
+let priority=
+document.getElementById("taskPriority")
+.value;
+
+let deadline=
+document.getElementById("taskDeadline")
+.value;
+
+if(!name){
+
+alert("Enter a task.");
+
+return;
+
+}
+
+let tasks=getTasks();
+
+tasks.push({
+
+id:Date.now(),
+name,
+priority,
+deadline,
+done:false
+
+});
+
+localStorage.setItem(
+"studentTasks",
+JSON.stringify(tasks)
+);
+
+document.getElementById("taskName").value="";
+
+renderTasks();
+
+}
+
+
+function renderTasks(){
+
+let tasks=getTasks();
+
+let box=
+document.getElementById("taskList");
+
+box.innerHTML="";
+
+if(!tasks.length){
+
+box.innerHTML=
+'<div class="card empty">No tasks yet.</div>';
+
+}else{
+
+tasks.forEach(t=>{
+
+box.innerHTML+=`
+
+<div class="task ${t.done?"done":""}">
+
+<strong>
+${escapeHTML(t.name)}
+</strong>
+
+<br>
+
+<span class="priority ${t.priority}">
+${escapeHTML(t.priority)}
+</span>
+
+<p>
+📅 ${t.deadline||"No deadline"}
+</p>
+
+<button
+class="btn success"
+onclick="toggleTask(${t.id})">
+
+${t.done?"Undo":"Complete"}
+
+</button>
+
+<button
+class="btn danger"
+onclick="deleteTask(${t.id})">
+
+Delete
+
+</button>
+
+</div>
+
+`;
+
+});
+
+}
+
+updateDashboard();
+
+}
+
+
+function toggleTask(id){
+
+let tasks=getTasks();
+
+let t=tasks.find(x=>x.id===id);
+
+if(t){
+t.done=!t.done;
+}
+
+localStorage.setItem(
+"studentTasks",
+JSON.stringify(tasks)
+);
+
+renderTasks();
+
+}
+
+
+function deleteTask(id){
+
+let tasks=
+getTasks()
+.filter(x=>x.id!==id);
+
+localStorage.setItem(
+"studentTasks",
+JSON.stringify(tasks)
+);
+
+renderTasks();
+
+}
+
+
+/* ================= TIMETABLE ================= */
+
+function addTimetable(){
+
+let day=
+document.getElementById("ttDay").value;
+
+let subject=
+document.getElementById("ttSubject")
+.value.trim();
+
+let time=
+document.getElementById("ttTime")
+.value.trim();
+
+let venue=
+document.getElementById("ttVenue")
+.value.trim();
+
+if(!subject){
+
+alert("Enter a course.");
+
+return;
+
+}
+
+let list=JSON.parse(
+localStorage.getItem("timetable")||"[]"
+);
+
+list.push({
+day,
+subject,
+time,
+venue
+});
+
+localStorage.setItem(
+"timetable",
+JSON.stringify(list)
+);
+
+document.getElementById("ttSubject").value="";
+document.getElementById("ttTime").value="";
+document.getElementById("ttVenue").value="";
+
+renderTimetable();
+
+}
+
+
+function renderTimetable(){
+
+let list=JSON.parse(
+localStorage.getItem("timetable")||"[]"
+);
+
+let box=
+document.getElementById("timetableList");
+
+box.innerHTML="";
+
+list.forEach((x,i)=>{
+
+box.innerHTML+=`
+
+<div class="card">
+
+<h3>
+📅 ${escapeHTML(x.day)}
+</h3>
+
+<p>
+📚 ${escapeHTML(x.subject)}
+</p>
+
+<p>
+⏰ ${escapeHTML(x.time)}
+</p>
+
+<p>
+📍 ${escapeHTML(x.venue||"No venue")}
+</p>
+
+<button
+class="btn danger"
+onclick="deleteTimetable(${i})">
+
+Delete
+
+</button>
+
+</div>
+
+`;
+
+});
+
+}
+
+
+function deleteTimetable(i){
+
+let list=JSON.parse(
+localStorage.getItem("timetable")||"[]"
+);
+
+list.splice(i,1);
+
+localStorage.setItem(
+"timetable",
+JSON.stringify(list)
+);
+
+renderTimetable();
+
+}
+
+
+/* ================= EXAMS ================= */
+
+function addExam(){
+
+let name=
+document.getElementById("examName")
+.value.trim();
+
+let date=
+document.getElementById("examDate").value;
+
+if(!name||!date){
+
+alert("Enter exam and date.");
+
+return;
+
+}
+
+let exams=JSON.parse(
+localStorage.getItem("exams")||"[]"
+);
+
+exams.push({
+name,
+date
+});
+
+localStorage.setItem(
+"exams",
+JSON.stringify(exams)
+);
+
+document.getElementById("examName").value="";
+document.getElementById("examDate").value="";
+
+renderExams();
+
+}
+
+
+function renderExams(){
+
+let exams=JSON.parse(
+localStorage.getItem("exams")||"[]"
+);
+
+let box=
+document.getElementById("examList");
+
+box.innerHTML="";
+
+if(!exams.length){
+
+box.innerHTML=
+'<div class="card empty">No exams scheduled.</div>';
+
+}else{
+
+exams.forEach((e,i)=>{
+
+let days=Math.ceil(
+(new Date(e.date)-new Date())/
+86400000
+);
+
+if(days<0){
+days=0;
+}
+
+box.innerHTML+=`
+
+<div class="exam">
+
+<h3>
+${escapeHTML(e.name)}
+</h3>
+
+<p>
+📅 ${e.date}
+</p>
+
+<div class="countdown">
+
+${days}
+day${days===1?"":"s"}
+
+</div>
+
+<button
+class="btn danger"
+onclick="deleteExam(${i})">
+
+Delete
+
+</button>
+
+</div>
+
+`;
+
+});
+
+}
+
+updateNextExam();
+
+}
+
+
+function deleteExam(i){
+
+let exams=JSON.parse(
+localStorage.getItem("exams")||"[]"
+);
+
+exams.splice(i,1);
+
+localStorage.setItem(
+"exams",
+JSON.stringify(exams)
+);
+
+renderExams();
+
+}
+
+
+function updateNextExam(){
+
+let exams=JSON.parse(
+localStorage.getItem("exams")||"[]"
+);
+
+let future=exams
+.filter(e=>new Date(e.date)>=new Date())
+.sort(
+(a,b)=>
+new Date(a.date)-new Date(b.date)
+);
+
+let box=
+document.getElementById("nextExam");
+
+if(!future.length){
+
+box.innerText="No exam scheduled.";
+
+return;
+
+}
+
+let e=future[0];
+
+let days=Math.ceil(
+(new Date(e.date)-new Date())/
+86400000
+);
+
+box.innerHTML=`
+
+<strong>
+${escapeHTML(e.name)}
+</strong>
+
+<p>
+📅 ${e.date}
+</p>
+
+<div class="countdown">
+
+${days}
+days remaining
+
+</div>
+
+`;
+
+}
+
+
+/* ================= STUDY ================= */
+
+function addStudyPlan(){
+
+let subject=
+document.getElementById("studySubject")
+.value.trim();
+
+let hours=parseFloat(
+document.getElementById("studyHours")
+.value
+);
+
+if(!subject||isNaN(hours)){
+
+alert("Enter subject and hours.");
+
+return;
+
+}
+
+let plans=JSON.parse(
+localStorage.getItem("studyPlans")||"[]"
+);
+
+plans.push({
+subject,
+hours
+});
+
+localStorage.setItem(
+"studyPlans",
+JSON.stringify(plans)
+);
+
+document.getElementById("studySubject").value="";
+document.getElementById("studyHours").value="";
+
+renderStudyPlans();
+
+}
+
+
+function renderStudyPlans(){
+
+let plans=JSON.parse(
+localStorage.getItem("studyPlans")||"[]"
+);
+
+let box=
+document.getElementById("studyList");
+
+box.innerHTML="";
+
+plans.forEach((p,i)=>{
+
+box.innerHTML+=`
+
+<div class="card">
+
+<h3>
+📖 ${escapeHTML(p.subject)}
+</h3>
+
+<p>
+⏱️ ${p.hours} hour(s)
+</p>
+
+<button
+class="btn danger"
+onclick="deleteStudyPlan(${i})">
+
+Delete
+
+</button>
+
+</div>
+
+`;
+
+});
+
+}
+
+
+function deleteStudyPlan(i){
+
+let plans=JSON.parse(
+localStorage.getItem("studyPlans")||"[]"
+);
+
+plans.splice(i,1);
+
+localStorage.setItem(
+"studyPlans",
+JSON.stringify(plans)
+);
+
+renderStudyPlans();
+
+}
+
+
+/* ================= NOTES ================= */
+
+function addNote(){
+
+let title=
+document.getElementById("noteTitle")
+.value.trim();
+
+let content=
+document.getElementById("noteContent")
+.value.trim();
+
+if(!title||!content){
+
+alert("Enter title and note.");
+
+return;
+
+}
+
+let notes=JSON.parse(
+localStorage.getItem("studentNotes")||"[]"
+);
+
+notes.push({
+
+title,
+content,
+date:new Date().toLocaleDateString()
+
+});
+
+localStorage.setItem(
+"studentNotes",
+JSON.stringify(notes)
+);
+
+document.getElementById("noteTitle").value="";
+document.getElementById("noteContent").value="";
+
+renderNotes();
+
+}
+
+
+function renderNotes(){
+
+let notes=JSON.parse(
+localStorage.getItem("studentNotes")||"[]"
+);
+
+let box=
+document.getElementById("notesList");
+
+box.innerHTML="";
+
+notes.forEach((n,i)=>{
+
+box.innerHTML+=`
+
+<div class="card">
+
+<h3>
+${escapeHTML(n.title)}
+</h3>
+
+<p>
+${escapeHTML(n.content)}
+</p>
+
+<small>
+${escapeHTML(n.date)}
+</small>
+
+<br>
+
+<button
+class="btn danger"
+onclick="deleteNote(${i})">
+
+Delete
+
+</button>
+
+</div>
+
+`;
+
+});
+
+}
+
+
+function deleteNote(i){
+
+let notes=JSON.parse(
+localStorage.getItem("studentNotes")||"[]"
+);
+
+notes.splice(i,1);
+
+localStorage.setItem(
+"studentNotes",
+JSON.stringify(notes)
+);
+
+renderNotes();
+
+}
+
+
+/* ================= EXPENSES ================= */
+
+function addExpense(){
+
+let name=
+document.getElementById("expenseName")
+.value.trim();
+
+let amount=parseFloat(
+document.getElementById("expenseAmount")
+.value
+);
+
+if(!name||isNaN(amount)){
+
+alert("Enter a valid expense.");
+
+return;
+
+}
+
+let expenses=JSON.parse(
+localStorage.getItem("expenses")||"[]"
+);
+
+expenses.push({
+name,
+amount
+});
+
+localStorage.setItem(
+"expenses",
+JSON.stringify(expenses)
+);
+
+document.getElementById("expenseName").value="";
+document.getElementById("expenseAmount").value="";
+
+renderExpenses();
+
+}
+
+
+function renderExpenses(){
+
+let expenses=JSON.parse(
+localStorage.getItem("expenses")||"[]"
+);
+
+let box=
+document.getElementById("expenseList");
+
+box.innerHTML="";
+
+let total=0;
+
+expenses.forEach((e,i)=>{
+
+total+=Number(e.amount);
+
+box.innerHTML+=`
+
+<div class="card">
+
+<strong>
+${escapeHTML(e.name)}
+</strong>
+
+<p>
+₦${Number(e.amount).toLocaleString()}
+</p>
+
+<button
+class="btn danger"
+onclick="deleteExpense(${i})">
+
+Delete
+
+</button>
+
+</div>
+
+`;
+
+});
+
+document.getElementById("totalExpenses")
+.innerText=
+total.toLocaleString();
+
+}
+
+
+function deleteExpense(i){
+
+let expenses=JSON.parse(
+localStorage.getItem("expenses")||"[]"
+);
+
+expenses.splice(i,1);
+
+localStorage.setItem(
+"expenses",
+JSON.stringify(expenses)
+);
+
+renderExpenses();
+
+}
+
+
+/* ================= ATTENDANCE ================= */
+
+function calculateAttendance(){
+
+let a=parseFloat(
+document.getElementById("attended").value
+);
+
+let t=parseFloat(
+document.getElementById("totalClasses").value
+);
+
+if(isNaN(a)||isNaN(t)||t<=0){
+
+alert("Enter valid values.");
+
+return;
+
+}
+
+let result=a/t*100;
+
+document.getElementById("attendanceResult")
+.innerText=
+"Attendance: "+result.toFixed(1)+"%";
+
+localStorage.setItem(
+"attendance",
+result.toFixed(1)
+);
+
+updateDashboard();
+
+}
+
+
+/* ================= GOALS ================= */
+
+function saveGoal(){
+
+let name=
+document.getElementById("goalName")
+.value.trim();
+
+let value=parseFloat(
+document.getElementById("goalValue").value
+);
+
+if(!name){
+
+alert("Enter your goal.");
+
+return;
+
+}
+
+if(isNaN(value)){
+value=0;
+}
+
+value=Math.max(
+0,
+Math.min(100,value)
+);
+
+localStorage.setItem(
+"academicGoal",
+JSON.stringify({
+name,
+value
+})
+);
+
+updateGoal();
+
+}
+
+
+function updateGoal(){
+
+let data=
+localStorage.getItem("academicGoal");
+
+if(!data){
+
+document.getElementById("goalText")
+.innerText="No goal set.";
+
+return;
+
+}
+
+let goal=JSON.parse(data);
+
+document.getElementById("goalText")
+.innerText=goal.name;
+
+document.getElementById("goalProgress")
+.style.width=goal.value+"%";
+
+document.getElementById("goalPercent")
+.innerText=goal.value+"%";
+
+}
+
+
+/* ================= TOOLS ================= */
+
+function calculatePercentage(){
+
+let n=parseFloat(
+document.getElementById("percentNumber")
+.value
+);
+
+let t=parseFloat(
+document.getElementById("percentTotal")
+.value
+);
+
+if(isNaN(n)||isNaN(t)||t===0){
+
+alert("Enter valid numbers.");
+
+return;
+
+}
+
+document.getElementById("percentageResult")
+.innerText=
+"Result: "+(n/t*100).toFixed(2)+"%";
+
+}
+
+
+function calculateAge(){
+
+let date=
+document.getElementById("birthDate")
+.value;
+
+if(!date){
+
+alert("Select date.");
+
+return;
+
+}
+
+let birth=new Date(date);
+
+let today=new Date();
+
+let age=
+today.getFullYear()-
+birth.getFullYear();
+
+let m=
+today.getMonth()-
+birth.getMonth();
+
+if(
+m<0||
+(m===0&&today.getDate()<birth.getDate())
+){
+
+age--;
+
+}
+
+document.getElementById("ageResult")
+.innerText=
+"Age: "+age+" years";
+
+}
+
+
+/* ================= PROFILE ================= */
+
+let profileEditing=false;
+
+let profilePhotoData="";
+
+let originalProfile={};
+
+
+function getProfile(){
+
+return JSON.parse(
+localStorage.getItem("studentProfile")||"{}"
+);
+
+}
+
+
+function editProfile(){
+
+profileEditing=true;
+
+originalProfile={
+...getProfile()
+};
+
+[
+"profilePhotoInput",
+"profileName",
+"profileMatric",
+"profileDepartment",
+"profileLevel",
+"profileUniversity",
+"profileEmail",
+"profilePhone"
+].forEach(id=>{
+
+document.getElementById(id)
+.disabled=false;
+
+});
+
+document.getElementById("editProfileBtn")
+.style.display="none";
+
+document.getElementById("saveProfileBtn")
+.style.display="block";
+
+document.getElementById("cancelProfileBtn")
+.style.display="block";
+
+document.getElementById("removePhotoBtn")
+.style.display="block";
+
+}
+
+
+function saveProfile(){
+
+let profile={
+
+name:
+document.getElementById("profileName")
+.value.trim(),
+
+matric:
+document.getElementById("profileMatric")
+.value.trim(),
+
+department:
+document.getElementById("profileDepartment")
+.value.trim(),
+
+level:
+document.getElementById("profileLevel")
+.value,
+
+university:
+document.getElementById("profileUniversity")
+.value.trim(),
+
+email:
+document.getElementById("profileEmail")
+.value.trim(),
+
+phone:
+document.getElementById("profilePhone")
+.value.trim(),
+
+photo:profilePhotoData
+
+};
+
+localStorage.setItem(
+"studentProfile",
+JSON.stringify(profile)
+);
+
+setProfileEditing(false);
+
+document.getElementById("profileMessage")
+.innerText=
+"✓ Profile saved successfully";
+
+updateEverythingFromProfile();
+
+}
+
+
+function cancelProfileEdit(){
+
+let p=originalProfile;
+
+document.getElementById("profileName")
+.value=p.name||"";
+
+document.getElementById("profileMatric")
+.value=p.matric||"";
+
+document.getElementById("profileDepartment")
+.value=p.department||"";
+
+document.getElementById("profileLevel")
+.value=p.level||"";
+
+document.getElementById("profileUniversity")
+.value=p.university||"";
+
+document.getElementById("profileEmail")
+.value=p.email||"";
+
+document.getElementById("profilePhone")
+.value=p.phone||"";
+
+profilePhotoData=p.photo||"";
+
+setProfileEditing(false);
+
+updateEverythingFromProfile();
+
+}
+
+
+function setProfileEditing(state){
+
+profileEditing=state;
+
+[
+"profilePhotoInput",
+"profileName",
+"profileMatric",
+"profileDepartment",
+"profileLevel",
+"profileUniversity",
+"profileEmail",
+"profilePhone"
+].forEach(id=>{
+
+document.getElementById(id)
+.disabled=!state;
+
+});
+
+document.getElementById("editProfileBtn")
+.style.display=state?"none":"block";
+
+document.getElementById("saveProfileBtn")
+.style.display=state?"block":"none";
+
+document.getElementById("cancelProfileBtn")
+.style.display=state?"block":"none";
+
+document.getElementById("removePhotoBtn")
+.style.display=state?"block":"none";
+
+}
+
+
+function handleProfilePhoto(e){
+
+let file=e.target.files[0];
+
+if(!file)return;
+
+let reader=new FileReader();
+
+reader.onload=function(){
+
+profilePhotoData=reader.result;
+
+updateEverythingFromProfile();
+
+};
+
+reader.readAsDataURL(file);
+
+}
+
+
+function removeProfilePhoto(){
+
+profilePhotoData="";
+
+document.getElementById("profilePhotoInput")
+.value="";
+
+updateEverythingFromProfile();
+
+}
+
+
+function loadProfile(){
+
+let p=getProfile();
+
+document.getElementById("profileName")
+.value=p.name||"";
+
+document.getElementById("profileMatric")
+.value=p.matric||"";
+
+document.getElementById("profileDepartment")
+.value=p.department||"";
+
+document.getElementById("profileLevel")
+.value=p.level||"";
+
+document.getElementById("profileUniversity")
+.value=p.university||"";
+
+document.getElementById("profileEmail")
+.value=p.email||"";
+
+document.getElementById("profilePhone")
+.value=p.phone||"";
+
+profilePhotoData=p.photo||"";
+
+setProfileEditing(false);
+
+updateEverythingFromProfile();
+
+}
+
+
+function updateEverythingFromProfile(){
+
+let name=
+document.getElementById("profileName")
+.value.trim()||
+"Student";
+
+document.getElementById("welcomeName")
+.innerText=name;
+
+document.getElementById("headerName")
+.innerText=
+name+" • Student Hub Pro";
+
+let first=
+name.charAt(0).toUpperCase();
+
+let header=
+document.getElementById("headerAvatar");
+
+if(profilePhotoData){
+
+header.innerHTML=
+`<img src="${profilePhotoData}">`;
+
+}else{
+
+header.innerText=first;
+
+}
+
+let avatar=
+document.getElementById("profileAvatar");
+
+if(profilePhotoData){
+
+avatar.innerHTML=
+`<img src="${profilePhotoData}">`;
+
+}else{
+
+avatar.innerText=first;
+
+}
+
+updateIDCard();
+
+}
+
+
+function updateIDCard(){
+
+let name=
+document.getElementById("profileName")
+.value.trim()||
+"Student";
+
+let first=
+name.charAt(0).toUpperCase();
+
+let avatar=
+document.getElementById("idAvatar");
+
+if(profilePhotoData){
+
+avatar.innerHTML=
+`<img src="${profilePhotoData}">`;
+
+}else{
+
+avatar.innerText=first;
+
+}
+
+document.getElementById("idName")
+.innerText=name;
+
+document.getElementById("idMatric")
+.innerText=
+document.getElementById("profileMatric")
+.value||
+"Matric Number";
+
+document.getElementById("idDepartment")
+.innerText=
+document.getElementById("profileDepartment")
+.value||
+"Department";
+
+document.getElementById("idUniversity")
+.innerText=
+document.getElementById("profileUniversity")
+.value||
+"University";
+
+document.getElementById("idLevel")
+.innerText=
+document.getElementById("profileLevel")
+.value||
+"Level";
+
+}
+
+
+/* ================= VOICE RECORDER ================= */
+
+let mediaRecorder;
+
+let audioChunks=[];
+
+
+async function startRecording(){
+
+try{
+
+let stream=
+await navigator.mediaDevices
+.getUserMedia({
+audio:true
+});
+
+mediaRecorder=
+new MediaRecorder(stream);
+
+audioChunks=[];
+
+mediaRecorder.ondataavailable=e=>{
+
+audioChunks.push(e.data);
+
+};
+
+mediaRecorder.onstop=saveRecording;
+
+mediaRecorder.start();
+
+document.getElementById("recordStatus")
+.innerText=
+"🔴 Recording...";
+
+}catch(e){
+
+alert(
+"Microphone permission is required."
+);
+
+}
+
+}
+
+
+function stopRecording(){
+
+if(
+mediaRecorder &&
+mediaRecorder.state==="recording"
+){
+
+mediaRecorder.stop();
+
+document.getElementById("recordStatus")
+.innerText=
+"Recording saved.";
+
+}
+
+}
+
+
+function saveRecording(){
+
+let blob=
+new Blob(audioChunks,{
+type:"audio/webm"
+});
+
+let reader=new FileReader();
+
+reader.onloadend=function(){
+
+let list=JSON.parse(
+localStorage.getItem("recordings")||"[]"
+);
+
+list.push({
+
+data:reader.result,
+
+date:
+new Date().toLocaleString()
+
+});
+
+localStorage.setItem(
+"recordings",
+JSON.stringify(list)
+);
+
+renderRecordings();
+
+};
+
+reader.readAsDataURL(blob);
+
+}
+
+
+function renderRecordings(){
+
+let list=JSON.parse(
+localStorage.getItem("recordings")||"[]"
+);
+
+let box=
+document.getElementById("recordingsList");
+
+box.innerHTML="";
+
+list.forEach((r,i)=>{
+
+box.innerHTML+=`
+
+<div class="card">
+
+<p>
+🎙️ ${escapeHTML(r.date)}
+</p>
+
+<audio
+controls
+style="width:100%">
+
+<source src="${r.data}">
+
+</audio>
+
+<button
+class="btn danger"
+onclick="deleteRecording(${i})">
+
+Delete
+
+</button>
+
+</div>
+
+`;
+
+});
+
+}
+
+
+function deleteRecording(i){
+
+let list=JSON.parse(
+localStorage.getItem("recordings")||"[]"
+);
+
+list.splice(i,1);
+
+localStorage.setItem(
+"recordings",
+JSON.stringify(list)
+);
+
+renderRecordings();
+
+}
+
+
+/* ================= NOTICE BOARD ================= */
+
+function addNotice(){
+
+let text=
+document.getElementById("noticeText")
+.value.trim();
+
+if(!text){
+
+alert("Enter a notice.");
+
+return;
+
+}
+
+let notices=JSON.parse(
+localStorage.getItem("notices")||"[]"
+);
+
+notices.push({
+
+text,
+
+date:
+new Date().toLocaleDateString()
+
+});
+
+localStorage.setItem(
+"notices",
+JSON.stringify(notices)
+);
+
+document.getElementById("noticeText")
+.value="";
+
+renderNotices();
+
+}
+
+
+function renderNotices(){
+
+let notices=JSON.parse(
+localStorage.getItem("notices")||"[]"
+);
+
+let box=
+document.getElementById("noticeList");
+
+box.innerHTML="";
+
+notices.forEach((n,i)=>{
+
+box.innerHTML+=`
+
+<div class="notice">
+
+<h3>
+📢 Notice
+</h3>
+
+<p>
+${escapeHTML(n.text)}
+</p>
+
+<small>
+${escapeHTML(n.date)}
+</small>
+
+<br>
+
+<button
+class="btn danger"
+onclick="deleteNotice(${i})">
+
+Delete
+
+</button>
+
+</div>
+
+`;
+
+});
+
+}
+
+
+function deleteNotice(i){
+
+let notices=JSON.parse(
+localStorage.getItem("notices")||"[]"
+);
+
+notices.splice(i,1);
+
+localStorage.setItem(
+"notices",
+JSON.stringify(notices)
+);
+
+renderNotices();
+
+}
+
+
+/* ================= DARK MODE ================= */
+
+function toggleDarkMode(){
+
+document.body.classList.toggle("dark");
+
+localStorage.setItem(
+"darkMode",
+document.body.classList.contains("dark")
+);
+
+}
+
+
+function loadDarkMode(){
+
+if(
+localStorage.getItem("darkMode")==="true"
+){
+
+document.body.classList.add("dark");
+
+}
+
+}
+
+
+/* ================= PIN ================= */
+
+function savePIN(){
+
+let pin=
+document.getElementById("pinInput")
+.value.trim();
+
+if(
+pin &&
+!/^\d{4,6}$/.test(pin)
+){
+
+alert(
+"PIN must contain 4-6 numbers."
+);
+
+return;
+
+}
+
+if(pin){
+
+localStorage.setItem(
+"studentPIN",
+pin
+);
+
+alert(
+"PIN saved. It will be required the next time the app opens."
+);
+
+}else{
+
+alert("Enter a PIN.");
+
+}
+
+}
+
+
+function removePIN(){
+
+localStorage.removeItem("studentPIN");
+
+alert(
+"App PIN has been removed."
+);
+
+}
+
+
+function unlockApp(){
+
+let saved=
+localStorage.getItem("studentPIN");
+
+let entered=
+document.getElementById("unlockPIN")
+.value.trim();
+
+if(!saved){
+
+document.getElementById("pinLock")
+.style.display="none";
+
+return;
+
+}
+
+if(entered===saved){
+
+document.getElementById("pinLock")
+.style.display="none";
+
+document.getElementById("unlockPIN")
+.value="";
+
+document.getElementById("pinError")
+.innerText="";
+
+}else{
+
+document.getElementById("pinError")
+.innerText=
+"Incorrect PIN. Try again.";
+
+document.getElementById("unlockPIN")
+.value="";
+
+}
+
+}
+
+
+function checkPIN(){
+
+if(localStorage.getItem("studentPIN")){
+
+document.getElementById("pinLock")
+.style.display="flex";
+
+}
+
+}
+
+
+/* ================= BACKUP ================= */
+
+function backupData(){
+
+let data={};
+
+for(
+let i=0;
+i<localStorage.length;
+i++
+){
+
+let key=localStorage.key(i);
+
+data[key]=
+localStorage.getItem(key);
+
+}
+
+let blob=new Blob(
+[
+JSON.stringify(data,null,2)
+],
+{
+type:"application/json"
+}
+);
+
+let url=
+URL.createObjectURL(blob);
+
+let a=
+document.createElement("a");
+
+a.href=url;
+
+a.download=
+"student-hub-pro-backup.json";
+
+a.click();
+
+URL.revokeObjectURL(url);
+
+}
+
+
+/* ================= RESTORE ================= */
+
+function restoreData(){
+
+let file=
+document.getElementById("restoreFile")
+.files[0];
+
+if(!file){
+
+alert(
+"Choose a backup file."
+);
+
+return;
+
+}
+
+let reader=new FileReader();
+
+reader.onload=function(e){
+
+try{
+
+let data=
+JSON.parse(e.target.result);
+
+Object.keys(data)
+.forEach(k=>{
+
+localStorage.setItem(
+k,
+data[k]
+);
+
+});
+
+alert(
+"Backup restored successfully."
+);
+
+location.reload();
+
+}catch(error){
+
+alert(
+"Invalid backup file."
+);
+
+}
+
+};
+
+reader.readAsText(file);
+
+}
+
+
+/* ================= RESET ================= */
+
+function resetApp(){
+
+if(
+!confirm(
+"Delete ALL Student Hub Pro data?"
+)
+)return;
+
+localStorage.clear();
+
+location.reload();
+
+}
+
+
+/* ================= DASHBOARD ================= */
+
+function updateDashboard(){
+
+document.getElementById(
+"dashboardCGPA"
+).innerText=
+localStorage.getItem(
+"currentCGPA"
+)||"0.00";
+
+let tasks=getTasks();
+
+document.getElementById(
+"dashboardTasks"
+).innerText=
+tasks.filter(t=>!t.done).length;
+
+document.getElementById(
+"dashboardAttendance"
+).innerText=
+(
+localStorage.getItem(
+"attendance"
+)||"0"
+)+"%";
+
+document.getElementById(
+"dashboardStudy"
+).innerText=
+localStorage.getItem(
+"studyHours"
+)||"0";
+
+renderUpcomingTasks();
+
+updateNextExam();
+
+}
+
+
+function renderUpcomingTasks(){
+
+let tasks=
+getTasks()
+.filter(t=>!t.done)
+.slice(0,5);
+
+let box=
+document.getElementById(
+"upcomingTasks"
+);
+
+if(!tasks.length){
+
+box.innerText=
+"No upcoming tasks.";
+
+return;
+
+}
+
+box.innerHTML=
+tasks.map(t=>`
+
+<div
+style="
+padding:9px;
+border-bottom:1px solid var(--border)
+">
+
+<strong>
+${escapeHTML(t.name)}
+</strong>
+
+<br>
+
+<small>
+${escapeHTML(t.deadline||"No deadline")}
+</small>
+
+</div>
+
+`).join("");
+
+}
+
+
+/* ================= STUDY HOURS ================= */
+
+function saveStudyHours(){
+
+let input=
+prompt(
+"How many hours did you study?"
+);
+
+let hours=
+parseFloat(input);
+
+if(
+isNaN(hours)||
+hours<0
+)return;
+
+let old=
+parseFloat(
+localStorage.getItem(
+"studyHours"
+)||"0"
+);
+
+localStorage.setItem(
+"studyHours",
+old+hours
+);
+
+updateDashboard();
+
+}
+
+
+/* ================= AI ASSISTANT ================= */
+
+function getAIReply(message){
+
+const text=
+message.toLowerCase();
+
+
+if(
+text.includes("hello")||
+text.includes("hi")||
+text.includes("hey")
+){
+
+return "Hello! 👋 I'm your Student Hub AI Assistant. What would you like to learn today?";
+
+}
+
+
+if(text.includes("html")){
+
+return "HTML creates the structure of a webpage. CSS controls its appearance, while JavaScript makes the webpage interactive.";
+
+}
+
+
+if(text.includes("css")){
+
+return "CSS means Cascading Style Sheets. It controls colors, fonts, spacing, layouts, borders and many visual effects on webpages.";
+
+}
+
+
+if(
+text.includes("javascript")||
+text.includes("js")
+){
+
+return "JavaScript adds functionality to webpages. It can handle button clicks, calculations, forms, storage and dynamic content.";
+
+}
+
+
+if(text.includes("python")){
+
+return "Python is a programming language with beginner-friendly syntax. It is used for software development, automation, data science and AI.";
+
+}
+
+
+if(
+text.includes("cgpa")||
+text.includes("gpa")
+){
+
+return "CGPA is calculated by dividing total quality points by total credit units. You can use the CGPA section of Student Hub Pro to calculate it.";
+
+}
+
+
+if(
+text.includes("study")||
+text.includes("read")
+){
+
+return "Try focused study sessions. Choose one topic, study for about 45 minutes, take a short break, and then review what you learned.";
+
+}
+
+
+if(
+text.includes("assignment")||
+text.includes("homework")
+){
+
+return "Break your assignment into smaller tasks, set a deadline and record it in the Student Hub Tasks section.";
+
+}
+
+
+if(
+text.includes("exam")||
+text.includes("test")
+){
+
+return "Use the Exam Center to record your exam dates. Student Hub Pro will calculate the remaining days for upcoming exams.";
+
+}
+
+
+if(
+text.includes("timetable")||
+text.includes("schedule")
+){
+
+return "You can add your courses, times and venues in the Smart Timetable section.";
+
+}
+
+
+if(text.includes("profile")){
+
+return "Your Profile section lets you edit your name, matric number, department, level, university, email, phone number and profile picture.";
+
+}
+
+
+if(text.includes("calculator")){
+
+return "The Scientific Calculator supports arithmetic, percentages, square roots, powers, trigonometry, logarithms and factorials.";
+
+}
+
+
+if(text.includes("note")){
+
+return "You can save important academic information in the Study Notes section and review it later.";
+
+}
+
+
+if(
+text.includes("motivate")||
+text.includes("motivation")
+){
+
+return "Keep going! 🎓 Consistent small steps can help you make steady academic progress.";
+
+}
+
+
+return "I can help with HTML, CSS, JavaScript, Python, CGPA, assignments, studying, exams, notes, timetables, calculators and Student Hub Pro.";
+
+}
+
+
+function speakAI(text){
+
+if(
+!("speechSynthesis" in window)
+){
+
+return;
+
+}
+
+window.speechSynthesis.cancel();
+
+let speech=
+new SpeechSynthesisUtterance(text);
+
+speech.lang="en-US";
+
+speech.rate=.95;
+
+speech.pitch=1;
+
+window.speechSynthesis.speak(speech);
+
+}
+
+
+function sendAIMessage(
+inputId="aiInput",
+chatId="aiChat"
+){
+
+let input=
+document.getElementById(inputId);
+
+let chat=
+document.getElementById(chatId);
+
+if(!input||!chat)return;
+
+let message=
+input.value.trim();
+
+if(!message)return;
+
+
+let user=
+document.createElement("div");
+
+user.className=
+"ai-message user";
+
+user.textContent=message;
+
+chat.appendChild(user);
+
+input.value="";
+
+chat.scrollTop=
+chat.scrollHeight;
+
+
+let typing=
+document.createElement("div");
+
+typing.className=
+"ai-message bot ai-typing";
+
+typing.textContent=
+"🤖 Thinking...";
+
+chat.appendChild(typing);
+
+
+setTimeout(()=>{
+
+typing.remove();
+
+let reply=
+getAIReply(message);
+
+let bot=
+document.createElement("div");
+
+bot.className=
+"ai-message bot";
+
+bot.textContent=reply;
+
+chat.appendChild(bot);
+
+chat.scrollTop=
+chat.scrollHeight;
+
+speakAI(reply);
+
+},700);
+
+}
+
+
+function askAI(question){
+
+let input=
+document.getElementById("aiInput");
+
+if(input){
+
+input.value=question;
+
+sendAIMessage();
+
+}
+
+}
+
+
+function startAIListening(
+inputId="aiInput"
+){
+
+const SpeechRecognition=
+window.SpeechRecognition||
+window.webkitSpeechRecognition;
+
+if(!SpeechRecognition){
+
+alert(
+"Voice recognition is not supported by this browser."
+);
+
+return;
+
+}
+
+const recognition=
+new SpeechRecognition();
+
+recognition.lang="en-US";
+
+recognition.continuous=false;
+
+recognition.interimResults=false;
+
+
+recognition.onstart=function(){
+
+let input=
+document.getElementById(inputId);
+
+if(input){
+
+input.placeholder=
+"Listening...";
+
+}
+
+};
+
+
+recognition.onresult=
+function(event){
+
+let result=
+event.results[0][0].transcript;
+
+let input=
+document.getElementById(inputId);
+
+if(input){
+
+input.value=result;
+
+if(inputId==="aiInputPage"){
+
+sendAIMessage(
+"aiInputPage",
+"aiChatPage"
+);
+
+}else{
+
+sendAIMessage();
+
+}
+
+}
+
+};
+
+
+recognition.onerror=function(){
+
+alert(
+"Voice recognition could not hear you. Please try again."
+);
+
+};
+
+
+recognition.onend=function(){
+
+let input=
+document.getElementById(inputId);
+
+if(input){
+
+input.placeholder=
+inputId==="aiInputPage"
+?"Type your question..."
+:"Ask your assistant...";
+
+}
+
+};
+
+
+recognition.start();
+
+}
+
+
+/* ================= AI ENTER KEY ================= */
+
+document.getElementById(
+"aiInput"
+).addEventListener(
+"keydown",
+function(event){
+
+if(event.key==="Enter"){
+
+sendAIMessage();
+
+}
+
+}
+);
+
+
+document.getElementById(
+"aiInputPage"
+).addEventListener(
+"keydown",
+function(event){
+
+if(event.key==="Enter"){
+
+sendAIMessage(
+"aiInputPage",
+"aiChatPage"
+);
+
+}
+
+}
+);
+
+
+/* ================= SECURITY ================= */
+
+function escapeHTML(text){
+
+return String(text)
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
+
+}
+
+
+/* ================= LIVE PROFILE ================= */
+
+[
+"profileName",
+"profileMatric",
+"profileDepartment",
+"profileLevel",
+"profileUniversity",
+"profileEmail",
+"profilePhone"
+].forEach(id=>{
+
+let e=
+document.getElementById(id);
+
+if(e){
+
+e.addEventListener(
+"input",
+()=>{
+
+if(profileEditing){
+
+updateEverythingFromProfile();
+
+}
+
+}
+);
+
+
+e.addEventListener(
+"change",
+()=>{
+
+if(profileEditing){
+
+updateEverythingFromProfile();
+
+}
+
+}
+);
+
+}
+
+});
+
+
+/* ================= START ================= */
+
+loadDarkMode();
+
+loadProfile();
+
+renderCourses();
+
+renderTasks();
+
+renderTimetable();
+
+renderExams();
+
+renderStudyPlans();
+
+renderNotes();
+
+renderExpenses();
+
+renderRecordings();
+
+renderNotices();
+
+updateGoal();
+
+updateDashboard();
+
+checkPIN();
+
+
+
+/* ================= FONT SETTINGS ================= */
+const DEFAULT_FONT_SETTINGS={
+  family:"Arial, sans-serif",
+  size:16,
+  weight:400,
+  letterSpacing:0,
+  lineHeight:1.5
+};
+
+function applyFontSettings(settings){
+  document.documentElement.style.setProperty("--app-font-family",settings.family);
+  document.documentElement.style.setProperty("--app-font-size",settings.size+"px");
+  document.documentElement.style.setProperty("--app-font-weight",settings.weight);
+  document.documentElement.style.setProperty("--app-letter-spacing",settings.letterSpacing+"px");
+  document.documentElement.style.setProperty("--app-line-height",settings.lineHeight);
+  updateFontDisplay();
+}
+
+function updateFontDisplay(){
+  const size=document.getElementById("fontSize");
+  const sizeValue=document.getElementById("fontSizeValue");
+  const spacing=document.getElementById("letterSpacing");
+  const spacingValue=document.getElementById("letterSpacingValue");
+  const line=document.getElementById("lineHeight");
+  const lineValue=document.getElementById("lineHeightValue");
+  if(size&&sizeValue) sizeValue.textContent=size.value;
+  if(spacing&&spacingValue) spacingValue.textContent=Number(spacing.value).toFixed(1);
+  if(line&&lineValue) lineValue.textContent=Number(line.value).toFixed(1);
+  const preview=document.getElementById("fontPreview");
+  if(preview){
+    preview.style.fontFamily=getComputedStyle(document.documentElement).getPropertyValue("--app-font-family");
+    preview.style.fontSize=getComputedStyle(document.documentElement).getPropertyValue("--app-font-size");
+    preview.style.fontWeight=getComputedStyle(document.documentElement).getPropertyValue("--app-font-weight");
+    preview.style.letterSpacing=getComputedStyle(document.documentElement).getPropertyValue("--app-letter-spacing");
+    preview.style.lineHeight=getComputedStyle(document.documentElement).getPropertyValue("--app-line-height");
+  }
+}
+
+function updateFontSettings(){
+  const family=document.getElementById("fontFamily"), size=document.getElementById("fontSize"), weight=document.getElementById("fontWeight"), spacing=document.getElementById("letterSpacing"), line=document.getElementById("lineHeight");
+  if(!family||!size||!weight||!spacing||!line) return;
+  applyFontSettings({family:family.value,size:Number(size.value),weight:Number(weight.value),letterSpacing:Number(spacing.value),lineHeight:Number(line.value)});
+}
+
+function saveFontSettings(){
+  const family=document.getElementById("fontFamily"), size=document.getElementById("fontSize"), weight=document.getElementById("fontWeight"), spacing=document.getElementById("letterSpacing"), line=document.getElementById("lineHeight");
+  if(!family) return;
+  const settings={family:family.value,size:Number(size.value),weight:Number(weight.value),letterSpacing:Number(spacing.value),lineHeight:Number(line.value)};
+  localStorage.setItem("studentHubFontSettings",JSON.stringify(settings));
+  applyFontSettings(settings);
+  if(typeof showToast==="function") showToast("Font settings saved successfully."); else alert("Font settings saved successfully.");
+}
+
+function loadFontSettings(){
+  let settings=DEFAULT_FONT_SETTINGS;
+  const saved=localStorage.getItem("studentHubFontSettings");
+  if(saved){try{settings={...DEFAULT_FONT_SETTINGS,...JSON.parse(saved)};}catch(e){console.warn("Could not load font settings",e);}}
+  applyFontSettings(settings);
+  const family=document.getElementById("fontFamily"), size=document.getElementById("fontSize"), weight=document.getElementById("fontWeight"), spacing=document.getElementById("letterSpacing"), line=document.getElementById("lineHeight");
+  if(family) family.value=settings.family;
+  if(size) size.value=settings.size;
+  if(weight) weight.value=settings.weight;
+  if(spacing) spacing.value=settings.letterSpacing;
+  if(line) line.value=settings.lineHeight;
+  updateFontDisplay();
+}
+
+function resetFontSettings(){
+  localStorage.removeItem("studentHubFontSettings");
+  const family=document.getElementById("fontFamily"), size=document.getElementById("fontSize"), weight=document.getElementById("fontWeight"), spacing=document.getElementById("letterSpacing"), line=document.getElementById("lineHeight");
+  if(family) family.value=DEFAULT_FONT_SETTINGS.family;
+  if(size) size.value=DEFAULT_FONT_SETTINGS.size;
+  if(weight) weight.value=DEFAULT_FONT_SETTINGS.weight;
+  if(spacing) spacing.value=DEFAULT_FONT_SETTINGS.letterSpacing;
+  if(line) line.value=DEFAULT_FONT_SETTINGS.lineHeight;
+  applyFontSettings(DEFAULT_FONT_SETTINGS);
+  if(typeof showToast==="function") showToast("Font settings restored."); else alert("Font settings restored.");
+}
+
+loadFontSettings();
+
+
+/* ================= STUDENT HUB PRO 3.0 SMART LAYER ================= */
+(function(){
+  const KEY='studentHub3';
+  function state(){try{return JSON.parse(localStorage.getItem(KEY)||'{}')}catch(e){return {}}}
+  function save(x){localStorage.setItem(KEY,JSON.stringify(x))}
+  function esc(x){return String(x??'').replace(/[&<>'"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[m]))}
+  window.hubNotifications=function(){return state().notifications||[]};
+  window.addHubNotification=function(title,text,type='info'){let s=state();s.notifications=s.notifications||[];s.notifications.unshift({id:Date.now(),title,text,type,read:false,date:new Date().toLocaleString()});s.notifications=s.notifications.slice(0,50);save(s);renderHubNotifications();renderSmartDashboard()};
+  window.readHubNotifications=function(){let s=state();(s.notifications||[]).forEach(n=>n.read=true);save(s);renderHubNotifications();renderSmartDashboard()};
+  window.renderHubNotifications=function(){let box=document.getElementById('notificationSummary');if(!box)return;let ns=hubNotifications(),u=ns.filter(n=>!n.read).length;box.textContent=u?u+' unread notification'+(u===1?'':'s'):'You\'re all caught up.'};
+  function getTasksSafe(){try{return typeof getTasks==='function'?getTasks():JSON.parse(localStorage.getItem('tasks')||'[]')}catch(e){return []}}
+  function getExamsSafe(){try{return JSON.parse(localStorage.getItem('exams')||'[]')}catch(e){return []}}
+  function renderToday(){
+    const c=document.getElementById('todayClasses'),d=document.getElementById('todayDeadlines'); if(!c||!d)return;
+    const day=new Date().toLocaleDateString('en-US',{weekday:'long'}).toLowerCase(); let tt=[];
+    try{tt=JSON.parse(localStorage.getItem('timetable')||'[]')}catch(e){}
+    let classes=tt.filter(x=>String(x.day||'').toLowerCase().includes(day));
+    c.innerHTML=classes.length?classes.slice(0,4).map(x=>'<div style="padding:7px 0;border-bottom:1px solid var(--border)"><strong>'+esc(x.course||x.subject||'Class')+'</strong><br><small>'+esc(x.time||'Time not set')+'</small></div>').join(''):'<p class="empty">No classes recorded for today.</p>';
+    let tasks=getTasksSafe().filter(x=>!x.done).slice(0,4); d.innerHTML=tasks.length?tasks.map(x=>'<div style="padding:7px 0;border-bottom:1px solid var(--border)"><strong>'+esc(x.name||x.title||'Task')+'</strong><br><small>'+esc(x.deadline||'No deadline')+'</small></div>').join(''):'<p class="empty">No urgent deadlines.</p>';
+  }
+  function renderGamification(){let s=state(),days=s.streak||0,xp=s.xp||0;document.getElementById('hubStreak')&&(document.getElementById('hubStreak').textContent=days+' day'+(days===1?'':'s'));document.getElementById('hubXP')&&(document.getElementById('hubXP').textContent=xp+' XP')}
+  function renderSmartDashboard(){renderToday();renderHubNotifications();renderGamification();let tasks=getTasksSafe();let done=tasks.filter(x=>x.done).length,total=tasks.length, pct=total?Math.round(done/total*100):0;let b=document.getElementById('dailyGoalBar'),t=document.getElementById('dailyGoalText');if(b)b.style.width=pct+'%';if(t)t.textContent=pct+'% task completion';
+    let a=document.getElementById('copilotAdvice');if(a){let exams=getExamsSafe();let msg=total&&!done?'Start with your most urgent unfinished task.':exams.length?'Review your next exam topics and schedule short focused sessions.':'Add your courses, tasks and exams so Copilot can personalize your plan.';a.innerHTML='<strong>💡 Copilot suggestion</strong><p style="margin-top:6px">'+msg+'</p>'}
+  }
+  window.copilotAction=function(type){let a=document.getElementById('copilotAdvice');if(!a)return;const m={revision:'Use 25–45 minute focused sessions. Start with the course you find hardest, then finish with active recall.',tasks:'Prioritize tasks by deadline first, then by importance. Break large assignments into smaller checkpoints.',exam:'Start with the exam topics you have not reviewed recently. Use practice questions after each study block.',gpa:'Track each course unit and grade. Focus revision time on high-unit courses and subjects where your scores are lowest.'};a.innerHTML='<strong>🤖 Copilot</strong><p style="margin-top:6px">'+m[type]+'</p>';addHubNotification('Copilot suggestion',m[type],'info')};
+  window.openNotificationsPage=function(){showPage('hubNotifications')};
+  document.addEventListener('DOMContentLoaded',function(){
+    // Add a notification page dynamically so the feature remains one-file.
+    if(!document.getElementById('hubNotifications')){let sec=document.createElement('section');sec.id='hubNotifications';sec.className='page';sec.innerHTML='<h2>🔔 Notifications</h2><div class="card"><button class="btn success" onclick="readHubNotifications()">✓ Mark all as read</button><div id="hubNotificationList" style="margin-top:12px"></div></div>';document.querySelector('main').appendChild(sec)}
+    window.renderHubNotificationsPage=function(){let box=document.getElementById('hubNotificationList');if(!box)return;let ns=hubNotifications();box.innerHTML=ns.length?ns.map(n=>'<div class="notification-item '+(!n.read?'unread':'')+'"><span class="notification-dot"></span><div><strong>'+esc(n.title)+'</strong><p style="font-size:13px;color:var(--muted);margin-top:3px">'+esc(n.text)+'</p><small style="color:var(--muted)">'+esc(n.date)+'</small></div></div>').join(''):'<p class="empty">No notifications yet.</p>'};
+    const old=window.showPage; if(typeof old==='function'&&!old.__hub3){window.showPage=function(id){old(id);if(id==='hubNotifications')renderHubNotificationsPage()};window.showPage.__hub3=true}
+    renderSmartDashboard();
+  });
+  // Study activity: award small XP when existing study-hours action is used.
+  const originalStudy=window.saveStudyHours;if(typeof originalStudy==='function'){window.saveStudyHours=function(){originalStudy();let s=state();s.xp=(s.xp||0)+25;s.streak=(s.streak||0)+1;save(s);renderSmartDashboard();addHubNotification('Study progress','You earned 25 XP for recording study time.','success')}}
+})();
+
+</script>
+
+</body>
+</html>
